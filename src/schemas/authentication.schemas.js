@@ -32,3 +32,13 @@ export const loginSchema = Joi.object({
     email: emailSchema.required(),
     password: passwordSchema.required()
 })
+
+export const signupSchema = Joi.object({
+    email: emailSchema.required(),
+    password: passwordSchema.required(),
+    userType: Joi.string().required()
+})
+
+export const googleSignupSchema = Joi.object({
+    tokenId: Joi.string().required()
+})

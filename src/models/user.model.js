@@ -9,33 +9,14 @@ const UserSchema = new Schema({
     unique: true,
     match: [/.+@.+\..+/, 'Please enter a valid email address']
   },
-  phone: {
-    countryCode: {
-      type: String,
-      required: true
-    },
-    number: {
-      type: String,
-      required: true,
-      match: [/^\d+$/, 'Please enter a valid phone number']
-    }
-  },
-  firstName: {
-    type: String,
-    required: true
-  },
-  lastName: {
-    type: String,
-    required: true
-  },
   password: {
     type: String,
-    default: null
+    required: true
   },
   roles: {
     type: [{
         type:String,
-        enum: ["petOwner", "petCarer"]
+        enum: ["owner", "rider"]
     }],
     required: [true, 'Roles field is required'],
     validate: {
@@ -47,9 +28,6 @@ const UserSchema = new Schema({
     }
   }
 });
-
-// Create a compound index to ensure unique phone numbers (countryCode + number)
-UserSchema.index({ 'phone.countryCode': 1, 'phone.number': 1 }, { unique: true });
 
 let User = mongoose.model('User', UserSchema);
 

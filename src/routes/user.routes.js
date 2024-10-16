@@ -12,4 +12,5 @@ userRouter.get('/me',
     errorHandler(userController.getMyProfile)
 )
 
+
 export default userRouter;

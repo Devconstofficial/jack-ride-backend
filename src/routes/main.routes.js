@@ -2,6 +2,8 @@ import express from "express";
 import { assignHTTPError, errorResponder, invalidPathHandler } from "../middlewares/error.middlewares.js";
 import authRouter from "./auth.routes.js";
 import userRouter from "./user.routes.js";
+import ownerRouter from "./owner.routes.js";
+import riderRouter from "./rider.routes.js";
 
 const router = express.Router();
 
