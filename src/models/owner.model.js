@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { Car, Insurance, License, LicensePlate } from "./common.models";
+import { Car, Insurance, License, LicensePlate } from "./common.models.js";
 
 const Schema = mongoose.Schema;
 
@@ -39,9 +39,9 @@ const OwnerSchema = new Schema({
   car:Car,
   accountStatus: {
     type: String,
-    enum: ["personalDetails", "license", "vin", "licensePlate", "insurance", "car", "pending", "verified"],
+    enum: ["ownCar", "personalDetails", "license", "vin", "licensePlate", "insurance", "car", "pending", "verified"],
     required: true,
-    default: "personalDetails"
+    default: "ownCar"
   }
 });
 

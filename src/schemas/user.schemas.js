@@ -11,6 +11,14 @@ export const personalDetailsSchema = Joi.object({
     gender: Joi.string().required()
 });
 
+export const driverDetailsSchema = Joi.object({
+    name: Joi.string().required(),
+    bio: Joi.string().required(),
+    contact: Joi.string().required(),
+    birthDate: Joi.date().required(),
+    gender: Joi.string().required()
+});
+
 export const licenseDetailsSchema = Joi.object({
     issuingState: Joi.string().required(),
     licenseNumber: Joi.string().required(),
@@ -21,8 +29,8 @@ export const vinSchema = Joi.object({
     vin: Joi.string().required()
 })
 
-export const lincensePlateSchema = Joi.object({
-    plateNumber: Joi.string().required(),
+export const licensePlateSchema = Joi.object({
+    licensePlateNumber: Joi.string().required(),
     issuedState: Joi.string().required()
 })
 

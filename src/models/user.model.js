@@ -11,12 +11,13 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    default: null
   },
   roles: {
     type: [{
         type:String,
-        enum: ["owner", "rider"]
+        enum: ["owner", "rider"],
+        required: true
     }],
     required: [true, 'Roles field is required'],
     validate: {

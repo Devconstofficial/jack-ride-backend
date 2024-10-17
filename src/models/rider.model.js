@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { Insurance, License } from "./common.models";
+import { Insurance, License } from "./common.models.js";
 
 const Schema = mongoose.Schema;
 
@@ -37,9 +37,9 @@ const RiderSchema = new Schema({
   insurance: Insurance,
   accountStatus: {
     type: String,
-    enum: ["empty", "driverDetails", "license", "insurance", "pending", "verified"],
+    enum: ["driverDetails", "license", "insurance", "pending", "verified"],
     required: true,
-    default: "empty"
+    default: "driverDetails"
   }
 });
 

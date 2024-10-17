@@ -15,7 +15,7 @@ authRouter.post('/signin',
 //Signup
 authRouter.post('/signup',
     bodyValidator(signupSchema),
-    errorHandler(userController.signup)
+    errorHandler(userController.signupAccount)
 )
 //Signup With Google
 authRouter.post('/signupWithGoogle',

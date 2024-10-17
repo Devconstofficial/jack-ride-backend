@@ -13,12 +13,14 @@ export function authGuard(role){
             const payload = jwt.verify(jwtToken, process.env.JWT_AUTHENTICATION_SECRET);
 
             
-            if(!payload.roles.includes(role))
+            if(!Object.keys(payload).includes(role))
                 throw new Error("You don't have access to " + role + " role")
 
             req.user = payload.user;
-            req.petOwner = payload.petOwner;
-            req.petCarer = payload.petCarer;
+            req.owner = payload.owner;
+            req.ownerVerified = payload.ownerVerified;
+            req.rider = payload.rider;
+            req.riderVerified = payload.riderVerified;
             req.admin = payload.admin
 
             next();

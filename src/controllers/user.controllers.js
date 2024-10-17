@@ -20,11 +20,19 @@ const userController = {
     },
 
     async signupAccount(req, res, next){
+        let {email, password, accountType} = req.body;
 
+        let resBody = await userServices.registerAccount(email, password, accountType);
+
+        return res.status(201).send(dataResponse("Account has been created", resBody));
     },
 
     async signupWithGoogle(req, res, next){
-        
+        let {tokenId, accountType} = req.body;
+
+        let {user} = await userServices.signUpWithGoogle(tokenId, accountType);
+
+        return res.status(200).send(dataResponse("Account has been retrieved", {user}))
     }
 }
 

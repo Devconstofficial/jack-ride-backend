@@ -40,7 +40,7 @@ export const License = new Schema({
     },
     selfieUrl: {
         type: String,
-        requireD: true
+        required: true
     }
 })
 
@@ -132,7 +132,7 @@ export const Car = new Schema({
         type: String,
         required: true
     },
-    carImges: {
+    carImages: {
         type: [String],
         default: []
     }
