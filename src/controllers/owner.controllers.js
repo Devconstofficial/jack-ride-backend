@@ -110,6 +110,20 @@ const ownerController = {
         let owner = await ownerServices.addLicensePlateDetails(ownerId, licensePlateNumber, issuedState);
 
         return res.status(200).send(dataResponse("User license plate details has been added", {owner}));
+    },
+
+    async getPendingOwners(req, res, next){
+        let pendingOwners = await ownerServices.getPendingOwners();
+
+        return res.status(200).send(dataResponse("Pending Owners has been fetched", {pendingOwners}));
+    },
+
+    async approveOwner(req, res, next){
+        let {ownerId} = req.params;
+
+        let owner = await ownerServices.approvePendingOwner(ownerId);
+
+        return res.status(200).send(dataResponse("Pending Owner has been approved", {owner}));
     }
 }
 

@@ -111,6 +111,20 @@ const riderController = {
         let rider = await riderServices.addLicensePlateDetails(riderId, licensePlateNumber, issuedState);
 
         return res.status(200).send(dataResponse("User license plate details has been added", {rider}));
+    },
+
+    async getPendingRiders(req, res, next){
+        let pendingRiders = await riderServices.getPendingRiders();
+
+        return res.status(200).send(dataResponse("Pending Riders has been fetched", {pendingRiders}));
+    },
+
+    async approveRider(req, res, next){
+        let {riderId} = req.params;
+
+        let rider = await riderServices.approvePendingRider(riderId);
+
+        return res.status(200).send(dataResponse("Pending Rider has been approved", {rider}));
     }
 }
 

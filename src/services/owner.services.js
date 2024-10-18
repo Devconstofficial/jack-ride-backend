@@ -166,7 +166,29 @@ const ownerServices = {
         owner.accountStatus = "pending"; // Update account status
         await owner.save();
         return owner;
-    }  
+    } ,
+
+    async getPendingOwners(){
+        let pendingOwners = await Owner.find({accountStatus: "pending"});
+
+        return pendingOwners;
+    },
+
+    async approvePendingOwner(ownerId){
+        let owner = await Owner.findById(ownerId);
+
+        if(!owner)
+            throw new createHttpError.NotFound("Owner not found");
+
+        if(owner.accountStatus != "pending")
+            throw new createHttpError.BadRequest("Owner account status is not pending");
+
+        owner.accountStatus = "verified";
+
+        await owner.save();
+
+        return owner;
+    }
 };
 
 export default ownerServices;

@@ -92,6 +92,28 @@ const riderServices = {
         rider.accountStatus = "pending"; // Final status
         await rider.save();
         return rider;
+    },
+    
+    async getPendingRiders(){
+        let pendingRiders = await Rider.find({accountStatus: "pending"});
+
+        return pendingRiders;
+    },
+
+    async approvePendingRider(riderId){
+        let rider = await Rider.findById(riderId);
+
+        if(!rider)
+            throw new createHttpError.NotFound("Rider not found");
+
+        if(rider.accountStatus != "pending")
+            throw new createHttpError.BadRequest("Rider account status is not pending");
+
+        rider.accountStatus = "verified";
+
+        await rider.save();
+
+        return rider;
     }
 };
 
