@@ -5,6 +5,7 @@ import { errorHandler } from "../handlers/error.handlers.js";
 import { bodyValidator } from "../middlewares/bodySchema.middlewares.js";
 import { aboutCarSchema, licenseDetailsSchema, licensePlateSchema, ownCarSchema, personalDetailsSchema, vinSchema } from "../schemas/user.schemas.js";
 import { upload } from "../middlewares/upload.middlewares.js";
+import rideController from "../controllers/ride.controllers.js";
 
 
 const ownerRouter = express.Router();
@@ -62,6 +63,33 @@ ownerRouter.post('/license-plate',
 ownerRouter.post('/insurance',
     authGuard('owner'),
     errorHandler(ownerController.addInsuranceDetails)
+)
+
+//---------Rides--------------//
+
+ownerRouter.post('/rides/requests', 
+    authGuard('rider'),
+    errorHandler(rideController.getRideRequest)
+)
+
+ownerRouter.get('/rides',
+    authGuard('rider'),
+    errorHandler(rideController.getRides)
+)
+
+ownerRouter.post('/rides/review/:rideId',
+    authGuard('rider'),
+    errorHandler(rideController.reviewRide)
+)
+
+ownerRouter.delete('/rides/:rideId',
+    authGuard('rider'),
+    errorHandler(rideController.removeRide)
+)
+
+ownerRouter.post('/rides/cancel/:rideId',
+    authGuard('rider'),
+    errorHandler(rideController.cancelRide)
 )
 
 export default ownerRouter;
