@@ -5,7 +5,7 @@ import { Server as socketIo } from 'socket.io';
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
-import Rider from "../src/models/rider.model";
+import Rider from "../src/models/rider.model.js";
 dotenv.config();
 
 // Setup Express and HTTP server
