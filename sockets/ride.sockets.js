@@ -5,6 +5,7 @@ import { Server as socketIo } from 'socket.io';
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
+import Rider from "../src/models/rider.model";
 dotenv.config();
 
 // Setup Express and HTTP server
@@ -90,7 +91,7 @@ io.on('connection', (socket) => {
       }
   })
 
-  socket.on('acceptRide', ({ownerId})=>{
+  socket.on('acceptRide', async ({ownerId})=>{
     try{
       if(!socket.rider)
         throw createHttpError.Unauthorized("Only Rider can accept ride");
@@ -101,7 +102,9 @@ io.on('connection', (socket) => {
         throw createHttpError.NotFound("Request not Found");
       }
 
-      socket.to(onlineOwners[ownerId]).emit('rideAccepted', {riderId})
+      let rider = await Rider.findById(riderId);
+
+      socket.to(onlineOwners[ownerId]).emit('rideAccepted', {...rider.toObject()})
     }
     catch(err){
       socket.emit("error", {error: err.message});
