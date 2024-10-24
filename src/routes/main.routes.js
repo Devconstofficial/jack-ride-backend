@@ -5,6 +5,7 @@ import userRouter from "./user.routes.js";
 import ownerRouter from "./owner.routes.js";
 import riderRouter from "./rider.routes.js";
 import adminRouter from "./admin.routes.js";
+import webhookRouter from "./webhooks.routes.js";
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.use('/user', userRouter)
 router.use('/owner', ownerRouter);
 router.use('/rider', riderRouter);
 router.use('/admin', adminRouter);
-
+router.use('/webhook', webhookRouter);
 router.use(assignHTTPError);
 router.use(errorResponder);
 router.use(invalidPathHandler);
