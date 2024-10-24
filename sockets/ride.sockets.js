@@ -72,12 +72,12 @@ io.on('connection', (socket) => {
     onlineOwners[socket.owner] = socket.id;
   }
 
-  socket.on('requestRide', ({leavingFrom, goingTo, bookingDate, hours})=>{
+  socket.on('requestRide', ({leavingFrom, goingTo, dateForBooking, hours})=>{
       try{
         if(!socket.owner)
           throw createHttpError.Unauthorized("Only Owner can request ride");
         //Save Ride Request
-        rideRequests[socket.owner] = {ownerId: socket.owner, leavingFrom, goingTo, bookingDate, hours}
+        rideRequests[socket.owner] = {ownerId: socket.owner, leavingFrom, goingTo, dateForBooking, hours}
         //Get Available Riders
   
         //Get Intersection of Online Riders and Available Riders
@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
           leavingFrom, goingTo, hours, dateForBooking
         } = rideRequests[socket.owner];
 
-        let ride = await rideServices.bookRide(socket.ownerId, riderId, leavingFrom, goingTo, hours, dateForBooking);
+        let ride = await rideServices.bookRide(socket.owner, riderId, leavingFrom, goingTo, hours, dateForBooking);
 
         //Get Intersection of Online Riders and Available Riders
         let filteredRidersIds = Object.keys(onlineRiders).filter((id) => id!=riderId);
