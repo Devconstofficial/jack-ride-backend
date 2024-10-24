@@ -14,7 +14,6 @@ mongoose.connect(
   db
 ).then((result)=>{
   console.log("database successfully connected");
-  jobs.activateAll();
 }).catch((err)=>{
   console.log(err)
   console.log("An error starting database occurred");
