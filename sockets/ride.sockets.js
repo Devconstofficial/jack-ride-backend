@@ -4,6 +4,7 @@ import createHttpError from 'http-errors';
 import { Server as socketIo } from 'socket.io';
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken"
+import mongoose from "mongoose";
 dotenv.config();
 
 // Setup Express and HTTP server
