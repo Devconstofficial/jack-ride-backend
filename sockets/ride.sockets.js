@@ -133,6 +133,10 @@ io.on('connection', (socket) => {
           throw createHttpError.BadRequest("There is no ride request associated with you");
         }
 
+        let {
+          leavingFrom, goingTo, hours, dateForBooking
+        } = rideRequests[socket.owner];
+
         let ride = await rideServices.bookRide(socket.ownerId, riderId, leavingFrom, goingTo, hours, dateForBooking);
 
         //Get Intersection of Online Riders and Available Riders
@@ -143,7 +147,7 @@ io.on('connection', (socket) => {
         })
         //Emit Ride Booked Event to him
         socket.to(onlineRiders[riderId]).emit('rideBooked', ride)
-        
+        socket.emit('rideBooked', ride)
         delete rideRequests[socket.owner];
       }
       catch(err){
