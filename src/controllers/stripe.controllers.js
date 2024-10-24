@@ -16,7 +16,7 @@ const stripeController = {
             throw createHttpError.NotFound("Ride not found");
         }
 
-        if(status != "succeeded" || (ride.hours*ride.rider.rate*100)-1 > req.body.data.object.amount){
+        if(status != "succeeded" || (ride.hours*ride.rider.rate*100)-1 < req.body.data.object.amount){
             //Delete Ride//
             await Ride.findByIdAndDelete(rideId);
         }
@@ -24,6 +24,7 @@ const stripeController = {
             await Ride.findByIdAndUpdate(rideId, {status: "pending"})
         }
 
+        
         return res.status(200).send(dataResponse("Ride updated successfully", {ride}))
     }
 }

@@ -104,7 +104,14 @@ io.on('connection', (socket) => {
 
       let rider = await Rider.findById(riderId);
 
-      socket.to(onlineOwners[ownerId]).emit('rideAccepted', {...rider.toObject()})
+      let payload = {
+        riderId: rider._id,
+        rating: rider.rating || 0,
+        reviews: rider.reviews || 0,
+        car: rider.car
+      }
+
+      socket.to(onlineOwners[ownerId]).emit('rideAccepted', payload)
     }
     catch(err){
       socket.emit("error", {error: err.message});
