@@ -222,6 +222,19 @@ const rideServices = {
 
         ride.status = "completed"; // Update status
         await ride.save();
+    },
+
+    async bookRide(ownerId, riderId, leavingFrom, goingTo, hours, dateForBooking){
+        let endTime = dateForBooking + (hours*3600);
+
+        if(!(await isRiderAvailable(riderId, dateForBooking, endTime)))
+            throw new createHttpError.BadRequest("Rider is not available for booking");
+
+        const ride = new Ride({owner:ownerId, rider:riderId, leavingFrom, goingTo, hours, dateForBooking});
+
+        await ride.save();
+
+        return ride;
     }
 };
 

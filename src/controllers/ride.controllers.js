@@ -133,6 +133,15 @@ const rideController = {
         let ride = await rideServices.completeRide(riderId, rideId);
 
         return res.status(200).send(dataResponse("Ride has been marked completed", {ride}));
+    },
+
+    async bookRide(req, res, next){
+        let ownerId = req.owner;
+        let {riderId, leavingFrom, goingTo, hours, dateForBooking} = req.body;
+
+        let ride = await rideServices.bookRide(ownerId, riderId, leavingFrom, goingTo, hours, dateForBooking);
+
+        return res.status(200).send(dataResponse("Ride has been booked", {ride}))
     }
 }
 

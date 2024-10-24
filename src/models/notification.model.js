@@ -14,8 +14,8 @@ const notificationSchema = new Schema({
   imageUrl:{
     type: String
   },
-  action: {
-    type: String, // Stores data specific to the action
+  data: {
+    type: Object // Stores data specific to the action
   },
   recipient: {
     type: mongoose.Schema.Types.ObjectId, // reference to User schema

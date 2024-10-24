@@ -74,5 +74,4 @@ riderRouter.post('/rides/cancel',
     authGuard('rider'),
     errorHandler(rideController.cancelRideByRider)
 )
-
 export default riderRouter;

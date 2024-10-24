@@ -98,4 +98,10 @@ ownerRouter.post('/rides/cancel/:rideId',
     errorHandler(rideController.cancelRideByOwner)
 )
 
+ownerRouter.post('/rides/',
+    authGuard('owner'),
+    errorHandler(rideController.bookRide)
+)
+
+
 export default ownerRouter;

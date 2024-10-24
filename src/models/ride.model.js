@@ -37,8 +37,8 @@ const RideSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "active", "completed", "cancelled"],
-    default: "pending"
+    enum: ["unpaid", "pending", "active", "completed", "cancelled"],
+    default: "unpaid"
   },
   riderReview: {
     type: {

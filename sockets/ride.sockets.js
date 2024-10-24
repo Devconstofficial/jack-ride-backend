@@ -11,7 +11,6 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 const io = new socketIo(server);
-
 // Store user locations
 let rideLocations = {};
 

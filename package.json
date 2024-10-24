@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node ./src/server.js",
+    "start": "node ./src/server.js & node ./sockets/ride.sockets.js",
     "dev": "nodemon ./src/server.js",
     "socket": "node ./sockets/ride.sockets.js",
     "socket_dev": "nodemon ./sockets/ride.sockets.js"
