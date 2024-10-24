@@ -27,6 +27,10 @@ const UserSchema = new Schema({
       },
       message: 'Roles must contain at least one item'
     }
+  },
+  notificationIds:{
+    type: [String],
+    default: []
   }
 });
 

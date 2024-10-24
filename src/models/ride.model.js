@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { Location } from "./common.models";
+import { Location } from "./common.models.js";
 
 const Schema = mongoose.Schema;
 
@@ -35,13 +35,34 @@ const RideSchema = new Schema({
     required: true,
     default: Date.now
   },
-  startedAt: {
-    type: Date
-  },
   status: {
     type: String,
     enum: ["pending", "active", "completed", "cancelled"],
     default: "pending"
+  },
+  riderReview: {
+    type: {
+      rating: {
+        type: Number,
+        required: true,
+      },
+      comment: {
+        type: String,
+        required: true
+      }
+    }
+  },
+  ownerReview: {
+    type: {
+      rating: {
+        type: Number,
+        required: true,
+      },
+      comment: {
+        type: String,
+        required: true
+      }
+    }
   }
 });
 

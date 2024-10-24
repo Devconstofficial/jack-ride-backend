@@ -40,6 +40,9 @@ const RiderSchema = new Schema({
     enum: ["driverDetails", "license", "insurance", "pending", "verified"],
     required: true,
     default: "driverDetails"
+  },
+  rate: {
+    type: Number
   }
 });
 

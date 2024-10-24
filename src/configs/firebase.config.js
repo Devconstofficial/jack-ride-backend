@@ -24,5 +24,6 @@ admin.initializeApp({
 });
 //Singleton recommended
 const bucket = admin.storage().bucket();
+const messenger = admin.messaging();
 
-export {bucket}
+export {bucket, messenger}

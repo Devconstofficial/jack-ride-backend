@@ -8,6 +8,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { createTransporter } from "./utils/mailer.js";
+import { jobs } from "./jobs/main.js";
 
 // Required for __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -37,6 +38,7 @@ export class App {
       db
     ).then((result)=>{
       console.log("database successfully connected");
+      jobs.activateAll();
     }).catch((err)=>{
       console.log(err)
       console.log("An error starting database occurred");

@@ -1,6 +1,7 @@
 import createHttpError from "http-errors";
 import Rider from "../models/rider.model.js";
 import { uploadFileToFirebase } from "./storage.services.js";
+import { getAvailableRiders } from "../repositories/rider.repository.js";
 
 const riderServices = {
     async getRiderProfile(riderId){
@@ -100,7 +101,7 @@ const riderServices = {
         return pendingRiders;
     },
 
-    async approvePendingRider(riderId){
+    async approvePendingRider(riderId, rate){
         let rider = await Rider.findById(riderId);
 
         if(!rider)
@@ -110,10 +111,22 @@ const riderServices = {
             throw new createHttpError.BadRequest("Rider account status is not pending");
 
         rider.accountStatus = "verified";
-
+        rider.rate = rate;
+        
         await rider.save();
 
         return rider;
+    },
+
+    async getAvailableRiders(startTime, endTime){
+        let startTimeDate = new Date(startTime);
+        let endTimeDate = new Date(endTime);
+        if(!startTimeDate || !endTimeDate)
+            throw createHttpError("error in parameters")
+
+        let availableRiders = await getAvailableRiders(startTimeDate, endTimeDate);
+
+        return availableRiders;
     }
 };
 

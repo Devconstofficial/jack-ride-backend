@@ -122,7 +122,9 @@ const riderController = {
     async approveRider(req, res, next){
         let {riderId} = req.params;
 
-        let rider = await riderServices.approvePendingRider(riderId);
+        let {rate} = req.body;
+
+        let rider = await riderServices.approvePendingRider(riderId, rate);
 
         return res.status(200).send(dataResponse("Pending Rider has been approved", {rider}));
     }

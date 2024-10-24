@@ -42,22 +42,22 @@ riderRouter.post('/insurance',
 
 riderRouter.get('/rides/requests', 
     authGuard('rider'),
-    errorHandler(rideController.getRideRequest)
+    errorHandler(rideController.getRideRequests)
 )
 
-riderRouter.post('/rides/requests/accept/:rideId',
+riderRouter.post('/rides/requests/accept/:requestId',
     authGuard('rider'),
     errorHandler(rideController.acceptRideRequest)
 )
 
-riderRouter.post('/rides/requests/reject/:rideId',
+riderRouter.post('/rides/requests/reject/:requestId',
     authGuard('rider'),
     errorHandler(rideController.rejectRideRequest)
 )
 
 riderRouter.get('/rides',
     authGuard('rider'),
-    errorHandler(rideController.getRides)
+    errorHandler(rideController.getRidesByRider)
 )
 
 riderRouter.post('/rides/review/:rideId',
@@ -67,12 +67,12 @@ riderRouter.post('/rides/review/:rideId',
 
 riderRouter.delete('/rides',
     authGuard('rider'),
-    errorHandler(rideController.removeRide)
+    errorHandler(rideController.removeRideByRider)
 )
 
 riderRouter.post('/rides/cancel',
     authGuard('rider'),
-    errorHandler(rideController.cancelRide)
+    errorHandler(rideController.cancelRideByRider)
 )
 
 export default riderRouter;
