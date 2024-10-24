@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
         riderId: rider._id,
         rating: rider.rating || 0,
         reviews: rider.reviews || 0,
-        car: rider.car
+        car: rider.carDetails
       }
 
       socket.to(onlineOwners[ownerId]).emit('rideAccepted', payload)

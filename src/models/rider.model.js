@@ -14,6 +14,10 @@ const RiderSchema = new Schema({
         type: String,
         required: true
       },
+      profilePicUrl: {
+        type: String,
+        default: "https://firebasestorage.googleapis.com/v0/b/bondly-2ff55.appspot.com/o/default-profile-image.jpg?alt=media&token=ee74f8f0-d6ed-4d30-ba3a-f89e5cf63eb3"
+      },
       contact: {
         type: String,
         required: true
