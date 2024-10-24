@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 import Rider from "../src/models/rider.model.js";
+import rideServices from "../src/services/ride.services.js";
 dotenv.config();
 
 // Setup Express and HTTP server
@@ -121,7 +122,7 @@ io.on('connection', (socket) => {
      
   })
 
-  socket.on('bookRide', ({riderId})=>{
+  socket.on('bookRide', async ({riderId})=>{
       try{
         //Only owner can book ride//
         if(!socket.owner)
@@ -132,6 +133,8 @@ io.on('connection', (socket) => {
           throw createHttpError.BadRequest("There is no ride request associated with you");
         }
 
+        let ride = await rideServices.bookRide(socket.ownerId, riderId, leavingFrom, goingTo, hours, dateForBooking);
+
         //Get Intersection of Online Riders and Available Riders
         let filteredRidersIds = Object.keys(onlineRiders).filter((id) => id!=riderId);
         //Emit Ride request to riders
@@ -139,8 +142,8 @@ io.on('connection', (socket) => {
           socket.to(onlineRiders[id]).emit('removeRideRequest', rideRequests[socket.owner])
         })
         //Emit Ride Booked Event to him
-        socket.to(onlineRiders[riderId]).emit('rideBooked', rideRequests[socket.owner])
-
+        socket.to(onlineRiders[riderId]).emit('rideBooked', ride)
+        
         delete rideRequests[socket.owner];
       }
       catch(err){
