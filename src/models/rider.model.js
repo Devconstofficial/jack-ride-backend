@@ -47,6 +47,14 @@ const RiderSchema = new Schema({
   },
   rate: {
     type: Number
+  },
+  rating: {
+    type: Number,
+    default: 0
+  },
+  reviews: {
+    type: Number,
+    default: 0
   }
 });
 

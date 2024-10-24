@@ -46,6 +46,14 @@ const OwnerSchema = new Schema({
     enum: ["ownCar", "personalDetails", "license", "vin", "licensePlate", "insurance", "car", "pending", "verified"],
     required: true,
     default: "ownCar"
+  },
+  rating: {
+    type: Number,
+    default: 0
+  },
+  reviews: {
+    type: Number,
+    default: 0
   }
 });
 

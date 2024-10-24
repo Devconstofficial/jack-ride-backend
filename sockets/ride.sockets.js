@@ -155,15 +155,15 @@ io.on('connection', (socket) => {
   });
 
   // Listen for location updates from clients
-  socket.on('updateLocation', ({ rideId, userId, lat, lng }) => {
-    if(userType == "rider"){
+  socket.on('updateLocation', ({ rideId, lat, lng }) => {
+    if(socket.rider){
         rideLocations[rideId]["riderLocation"] = {
             "riderId": userId,
             "lat": lat,
             "lng": lng
         };
     }
-    else if(userType == "owner"){
+    else if(socket.owner){
         rideLocations[rideId]["ownerLocation"] = {
             "ownerId": userId,
             "lat": lat,
