@@ -4,11 +4,20 @@ import createHttpError from 'http-errors';
 import { Server as socketIo } from 'socket.io';
 import dotenv from 'dotenv';
 import jwt from "jsonwebtoken"
-import { isObjectIdOrHexString } from "mongoose";
 dotenv.config();
 
 // Setup Express and HTTP server
 const app = express();
+const db = process.env.MONGODB_URI;
+mongoose.connect(
+  db
+).then((result)=>{
+  console.log("database successfully connected");
+  jobs.activateAll();
+}).catch((err)=>{
+  console.log(err)
+  console.log("An error starting database occurred");
+});
 const server = http.createServer(app);
 const io = new socketIo(server);
 // Store user locations
@@ -61,12 +70,12 @@ io.on('connection', (socket) => {
     onlineOwners[socket.owner] = socket.id;
   }
 
-  socket.on('requestRide', ({goingFrom, goingTo, bookingDate, hours})=>{
+  socket.on('requestRide', ({leavingFrom, goingTo, bookingDate, hours})=>{
       try{
         if(!socket.owner)
           throw createHttpError.Unauthorized("Only Owner can request ride");
         //Save Ride Request
-        rideRequests[socket.owner] = {ownerId: socket.owner, goingFrom, goingTo, bookingDate, hours}
+        rideRequests[socket.owner] = {ownerId: socket.owner, leavingFrom, goingTo, bookingDate, hours}
         //Get Available Riders
   
         //Get Intersection of Online Riders and Available Riders
