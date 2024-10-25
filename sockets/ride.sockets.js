@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 import Rider from "../src/models/rider.model.js";
 import rideServices from "../src/services/ride.services.js";
+import riderServices from "../src/services/rider.services.js";
 dotenv.config();
 
 // Setup Express and HTTP server
@@ -72,16 +73,22 @@ io.on('connection', (socket) => {
     onlineOwners[socket.owner] = socket.id;
   }
 
-  socket.on('requestRide', ({leavingFrom, goingTo, dateForBooking, hours})=>{
+  socket.on('requestRide', async ({leavingFrom, goingTo, dateForBooking, hours})=>{
       try{
         if(!socket.owner)
           throw createHttpError.Unauthorized("Only Owner can request ride");
         //Save Ride Request
         rideRequests[socket.owner] = {ownerId: socket.owner, leavingFrom, goingTo, dateForBooking, hours}
         //Get Available Riders
-  
+        let startTime = new Date(dateForBooking);
+        let endTime = startTime + hours*3600;
+        let availableRiders = await riderServices.getAvailableRiders(startTime, endTime)
         //Get Intersection of Online Riders and Available Riders
-        let filteredRidersIds = Object.keys(onlineRiders);
+        let filteredRidersIds = Object.keys(onlineRiders).filter((riderId)=>{
+          let index = availableRiders.findIndex((rider)=>rider._id == riderId)
+
+          return index>-1
+        });
         //Emit Ride request to riders
         filteredRidersIds.forEach((riderId)=>{
           socket.to(onlineRiders[riderId]).emit('rideRequested', rideRequests[socket.owner])
