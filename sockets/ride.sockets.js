@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
         rideRequests[socket.owner] = {ownerId: socket.owner, leavingFrom, goingTo, dateForBooking, hours}
         //Get Available Riders
         let startTime = new Date(dateForBooking);
-        let endTime = startTime + hours*3600;
+        let endTime = new Date(startTime + hours*3600);
 
         console.log(startTime, endTime);
 
