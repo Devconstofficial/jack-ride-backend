@@ -32,6 +32,13 @@ export async function getAvailableRiders(startTime, endTime){
                       cond: {
                         $and: [
                           {
+                            $or: [
+                              { $eq: ["$$ride.status", "pending"] },
+                              { $eq: ["$$ride.status", "unpaid"] },
+                              { $eq: ["$$ride.status", "active"] },
+                            ]
+                          },  // Ride must be 'active'
+                          {
                             // Calculate ride end time
                             $let: {
                               vars: {
