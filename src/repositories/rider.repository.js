@@ -94,7 +94,6 @@ export async function getAvailableRiders(startTime, endTime){
 export async function isRiderAvailable(riderId, startTime, endTime){
     let targetStartTime = new Date(startTime);
     let targetEndTime = new Date(endTime);
-    console.log( new mongoose.Types.ObjectId(riderId))
     let availableRiders = await Rider.aggregate([
         {
           // Stage 1: Only include verified riders

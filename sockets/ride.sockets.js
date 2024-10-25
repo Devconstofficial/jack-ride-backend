@@ -82,6 +82,9 @@ io.on('connection', (socket) => {
         //Get Available Riders
         let startTime = new Date(dateForBooking);
         let endTime = startTime + hours*3600;
+
+        console.log(startTime, endTime);
+
         let availableRiders = await riderServices.getAvailableRiders(startTime, endTime)
         console.log(availableRiders);
         //Get Intersection of Online Riders and Available Riders
