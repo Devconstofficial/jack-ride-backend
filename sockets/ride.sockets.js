@@ -83,12 +83,14 @@ io.on('connection', (socket) => {
         let startTime = new Date(dateForBooking);
         let endTime = startTime + hours*3600;
         let availableRiders = await riderServices.getAvailableRiders(startTime, endTime)
+        console.log(availableRiders);
         //Get Intersection of Online Riders and Available Riders
         let filteredRidersIds = Object.keys(onlineRiders).filter((riderId)=>{
           let index = availableRiders.findIndex((rider)=>rider._id == riderId)
 
           return index>-1
         });
+
         //Emit Ride request to riders
         filteredRidersIds.forEach((riderId)=>{
           socket.to(onlineRiders[riderId]).emit('rideRequested', rideRequests[socket.owner])
